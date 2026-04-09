@@ -9,8 +9,8 @@ from pathlib import Path
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 BASE_DIR          = Path(__file__).resolve().parent.parent
-BUNDLE_PATH       = BASE_DIR / "models" / "salary_pipeline_bundle.joblib"
-
+# fixed
+BUNDLE_PATH = BASE_DIR / "app" / "models" / "salary_pipeline_bundle.joblib"
 # ── Model metadata ────────────────────────────────────────────────────────────
 MODEL_VERSION     = "random-forest-v1.0"
 API_TITLE         = "Salary Prediction API"
