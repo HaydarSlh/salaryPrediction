@@ -15,14 +15,24 @@ import logging
 import time
 import requests
 
-from .market_stats import (
-    MARKET_STATS,
-    EXPERIENCE_LABELS,
-    COMPANY_SIZE_LABELS,
-    REMOTE_LABELS,
-    EMPLOYMENT_LABELS,
-    EXPERIENCE_ORDER,
-)
+try:
+    from .market_stats import (
+        MARKET_STATS,
+        EXPERIENCE_LABELS,
+        COMPANY_SIZE_LABELS,
+        REMOTE_LABELS,
+        EMPLOYMENT_LABELS,
+        EXPERIENCE_ORDER,
+    )
+except ImportError:
+    from market_stats import (
+        MARKET_STATS,
+        EXPERIENCE_LABELS,
+        COMPANY_SIZE_LABELS,
+        REMOTE_LABELS,
+        EMPLOYMENT_LABELS,
+        EXPERIENCE_ORDER,
+    )
 
 logger = logging.getLogger(__name__)
 

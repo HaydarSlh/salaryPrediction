@@ -11,11 +11,18 @@ import logging
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .market_stats import (
-    MARKET_STATS,
-    EXPERIENCE_LABELS,
-    EXPERIENCE_ORDER,
-)
+try:
+    from .market_stats import (
+        MARKET_STATS,
+        EXPERIENCE_LABELS,
+        EXPERIENCE_ORDER,
+    )
+except ImportError:
+    from market_stats import (
+        MARKET_STATS,
+        EXPERIENCE_LABELS,
+        EXPERIENCE_ORDER,
+    )
 
 logger = logging.getLogger(__name__)
 
