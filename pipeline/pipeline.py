@@ -27,7 +27,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ── Load env vars ─────────────────────────────────────────────────────────────
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 FASTAPI_URL   = os.getenv("FASTAPI_URL",   "http://127.0.0.1:8000")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
