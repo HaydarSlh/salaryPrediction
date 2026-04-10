@@ -177,12 +177,8 @@ def run_pipeline(job_input: dict):
     """
     import sys, os
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    pipeline_dir = os.path.join(root_dir, "pipeline")
-
     if root_dir not in sys.path:
         sys.path.insert(0, root_dir)
-    if pipeline_dir not in sys.path:
-        sys.path.insert(0, pipeline_dir)
 
     from pipeline.gemini_service import call_gemini
     from pipeline.chart_builder import build_salary_chart
