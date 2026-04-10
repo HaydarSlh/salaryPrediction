@@ -328,17 +328,30 @@ with st.sidebar:
         format_func=lambda x: {0: "On-site", 50: "Hybrid", 100: "Fully Remote"}[x]
     )
 
+    # ── Country code helper ───────────────────────────────────────────────
+    COMMON_COUNTRIES = "US · GB · DE · IN · CA · FR · ES · JP · AU · BR · NL · PT · PK · GR · RU"
+
+    st.markdown(f"""
+    <div style='background:#1a1f2e; border-radius:8px; padding:10px 14px;
+                margin-bottom:12px; font-size:12px; color:#a0b0c8;'>
+        💡 Use 2-letter ISO country codes<br>
+        <span style='color:#7fb3d3;'>{COMMON_COUNTRIES}</span>
+    </div>
+    """, unsafe_allow_html=True)
+
     company_location = st.text_input(
-        "Company Location (country code)",
+        "Company Location",
         value="US",
         max_chars=2,
-    ).upper()
+        help="2-letter ISO code — e.g. US=United States, GB=United Kingdom, DE=Germany, IN=India, CA=Canada"
+    ).upper().strip()
 
     employee_residence = st.text_input(
-        "Your Country (country code)",
+        "Your Country of Residence",
         value="US",
         max_chars=2,
-    ).upper()
+        help="2-letter ISO code — e.g. US=United States, GB=United Kingdom, DE=Germany, IN=India, CA=Canada"
+    ).upper().strip()
 
     company_size = st.selectbox(
         "Company Size",
@@ -358,6 +371,37 @@ st.markdown("---")
 
 # ── Handle prediction ─────────────────────────────────────────────────────────
 if predict_btn:
+    # ── Validation ────────────────────────────────────────────────────
+    errors = []
+
+    if len(company_location) != 2 or not company_location.isalpha():
+        errors.append("❌ **Company Location** is invalid — must be exactly 2 letters (e.g. **US**, **GB**, **DE**)")
+
+    if len(employee_residence) != 2 or not employee_residence.isalpha():
+        errors.append("❌ **Your Country** is invalid — must be exactly 2 letters (e.g. **US**, **GB**, **DE**)")
+
+    if errors:
+        for error in errors:
+            st.error(error)
+        st.markdown("""
+        <div style='background:#1a1f2e; border-radius:8px; padding:14px 18px;
+                    border-left:4px solid #4C72B0; color:#a0c4e8; font-size:13px;'>
+            <b>Common country codes:</b><br><br>
+            🇺🇸 US — United States<br>
+            🇬🇧 GB — United Kingdom<br>
+            🇩🇪 DE — Germany<br>
+            🇮🇳 IN — India<br>
+            🇨🇦 CA — Canada<br>
+            🇫🇷 FR — France<br>
+            🇯🇵 JP — Japan<br>
+            🇧🇷 BR — Brazil<br>
+            🇦🇺 AU — Australia<br>
+            🇵🇰 PK — Pakistan
+        </div>
+        """, unsafe_allow_html=True)
+        st.stop()
+
+    # ── Run pipeline ──────────────────────────────────────────────────
     job_input = {
         "work_year":          work_year,
         "experience_level":   experience_level,
