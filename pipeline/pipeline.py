@@ -13,8 +13,6 @@ Flow:
 import os
 import logging
 import requests
-from dotenv import load_dotenv
-
 from gemini_service import call_gemini
 from chart_builder import build_salary_chart
 from supabase_service import SupabaseClient
@@ -25,9 +23,6 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
 )
 logger = logging.getLogger(__name__)
-
-# ── Load env vars ─────────────────────────────────────────────────────────────
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 FASTAPI_URL   = os.getenv("FASTAPI_URL",   "http://127.0.0.1:8000")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
