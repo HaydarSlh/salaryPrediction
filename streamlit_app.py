@@ -9,10 +9,11 @@ Flow: User fills form → pipeline runs → Supabase updated → results display
 import os
 import sys
 
-# Ensure repo root is in sys.path so `pipeline` is found as a package
+# Add pipeline/ directory directly so its modules are importable without package prefix
 _root_dir = os.path.dirname(os.path.abspath(__file__))
-if _root_dir not in sys.path:
-    sys.path.insert(0, _root_dir)
+_pipeline_dir = os.path.join(_root_dir, "pipeline")
+if _pipeline_dir not in sys.path:
+    sys.path.insert(0, _pipeline_dir)
 
 import json
 import base64
@@ -182,9 +183,9 @@ def run_pipeline(job_input: dict):
     Calls FastAPI → Gemini → Supabase.
     Imports pipeline functions directly.
     """
-    from pipeline.gemini_service import call_gemini
-    from pipeline.chart_builder import build_salary_chart
-    from pipeline.supabase_service import SupabaseClient
+    from gemini_service import call_gemini
+    from chart_builder import build_salary_chart
+    from supabase_service import SupabaseClient
 
     # 1. FastAPI
     r = requests.post(f"{FASTAPI_URL}/predict", json=job_input, timeout=15)
