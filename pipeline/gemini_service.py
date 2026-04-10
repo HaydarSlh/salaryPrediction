@@ -15,7 +15,7 @@ import logging
 import time
 import requests
 
-from market_stats import (
+from pipeline.market_stats import (
     MARKET_STATS,
     EXPERIENCE_LABELS,
     COMPANY_SIZE_LABELS,

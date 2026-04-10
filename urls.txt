@@ -1,0 +1,5 @@
+Streamlit Web App
+https://salaryprediction-9kyatd7zjvrh98icngrfvm.streamlit.app/
+
+FastAPI Endpoint (Railway)
+https://salaryprediction-production-d26f.up.railway.app

@@ -11,7 +11,7 @@ import logging
 import matplotlib.pyplot as plt
 import numpy as np
 
-from market_stats import (
+from pipeline.market_stats import (
     MARKET_STATS,
     EXPERIENCE_LABELS,
     EXPERIENCE_ORDER,
