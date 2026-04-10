@@ -328,30 +328,47 @@ with st.sidebar:
         format_func=lambda x: {0: "On-site", 50: "Hybrid", 100: "Fully Remote"}[x]
     )
 
-    # ── Country code helper ───────────────────────────────────────────────
-    COMMON_COUNTRIES = "US · GB · DE · IN · CA · FR · ES · JP · AU · BR · NL · PT · PK · GR · RU"
+    # ── Country options (from training data) ─────────────────────────────
+    COUNTRY_OPTIONS = [
+        "AE", "AS", "AT", "AU", "BE", "BR", "CA", "CH", "CL", "CN",
+        "CO", "CZ", "DE", "DK", "DZ", "EE", "ES", "FR", "GB", "GR",
+        "HN", "HR", "HU", "IE", "IL", "IN", "IQ", "IR", "IT", "JP",
+        "KE", "LU", "MD", "MT", "MX", "MY", "NG", "NL", "NZ", "PK",
+        "PL", "PT", "RO", "RU", "SG", "SI", "TR", "UA", "US", "VN",
+    ]
+    COUNTRY_NAMES = {
+        "AE": "AE — UAE", "AS": "AS — American Samoa", "AT": "AT — Austria",
+        "AU": "AU — Australia", "BE": "BE — Belgium", "BR": "BR — Brazil",
+        "CA": "CA — Canada", "CH": "CH — Switzerland", "CL": "CL — Chile",
+        "CN": "CN — China", "CO": "CO — Colombia", "CZ": "CZ — Czech Republic",
+        "DE": "DE — Germany", "DK": "DK — Denmark", "DZ": "DZ — Algeria",
+        "EE": "EE — Estonia", "ES": "ES — Spain", "FR": "FR — France",
+        "GB": "GB — United Kingdom", "GR": "GR — Greece", "HN": "HN — Honduras",
+        "HR": "HR — Croatia", "HU": "HU — Hungary", "IE": "IE — Ireland",
+        "IL": "IL — Israel", "IN": "IN — India", "IQ": "IQ — Iraq",
+        "IR": "IR — Iran", "IT": "IT — Italy", "JP": "JP — Japan",
+        "KE": "KE — Kenya", "LU": "LU — Luxembourg", "MD": "MD — Moldova",
+        "MT": "MT — Malta", "MX": "MX — Mexico", "MY": "MY — Malaysia",
+        "NG": "NG — Nigeria", "NL": "NL — Netherlands", "NZ": "NZ — New Zealand",
+        "PK": "PK — Pakistan", "PL": "PL — Poland", "PT": "PT — Portugal",
+        "RO": "RO — Romania", "RU": "RU — Russia", "SG": "SG — Singapore",
+        "SI": "SI — Slovenia", "TR": "TR — Turkey", "UA": "UA — Ukraine",
+        "US": "US — United States", "VN": "VN — Vietnam",
+    }
 
-    st.markdown(f"""
-    <div style='background:#1a1f2e; border-radius:8px; padding:10px 14px;
-                margin-bottom:12px; font-size:12px; color:#a0b0c8;'>
-        💡 Use 2-letter ISO country codes<br>
-        <span style='color:#7fb3d3;'>{COMMON_COUNTRIES}</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-    company_location = st.text_input(
+    company_location = st.selectbox(
         "Company Location",
-        value="US",
-        max_chars=2,
-        help="2-letter ISO code — e.g. US=United States, GB=United Kingdom, DE=Germany, IN=India, CA=Canada"
-    ).upper().strip()
+        options=COUNTRY_OPTIONS,
+        index=COUNTRY_OPTIONS.index("US"),
+        format_func=lambda x: COUNTRY_NAMES[x],
+    )
 
-    employee_residence = st.text_input(
+    employee_residence = st.selectbox(
         "Your Country of Residence",
-        value="US",
-        max_chars=2,
-        help="2-letter ISO code — e.g. US=United States, GB=United Kingdom, DE=Germany, IN=India, CA=Canada"
-    ).upper().strip()
+        options=COUNTRY_OPTIONS,
+        index=COUNTRY_OPTIONS.index("US"),
+        format_func=lambda x: COUNTRY_NAMES[x],
+    )
 
     company_size = st.selectbox(
         "Company Size",
@@ -371,36 +388,6 @@ st.markdown("---")
 
 # ── Handle prediction ─────────────────────────────────────────────────────────
 if predict_btn:
-    # ── Validation ────────────────────────────────────────────────────
-    errors = []
-
-    if len(company_location) != 2 or not company_location.isalpha():
-        errors.append("❌ **Company Location** is invalid — must be exactly 2 letters (e.g. **US**, **GB**, **DE**)")
-
-    if len(employee_residence) != 2 or not employee_residence.isalpha():
-        errors.append("❌ **Your Country** is invalid — must be exactly 2 letters (e.g. **US**, **GB**, **DE**)")
-
-    if errors:
-        for error in errors:
-            st.error(error)
-        st.markdown("""
-        <div style='background:#1a1f2e; border-radius:8px; padding:14px 18px;
-                    border-left:4px solid #4C72B0; color:#a0c4e8; font-size:13px;'>
-            <b>Common country codes:</b><br><br>
-            🇺🇸 US — United States<br>
-            🇬🇧 GB — United Kingdom<br>
-            🇩🇪 DE — Germany<br>
-            🇮🇳 IN — India<br>
-            🇨🇦 CA — Canada<br>
-            🇫🇷 FR — France<br>
-            🇯🇵 JP — Japan<br>
-            🇧🇷 BR — Brazil<br>
-            🇦🇺 AU — Australia<br>
-            🇵🇰 PK — Pakistan
-        </div>
-        """, unsafe_allow_html=True)
-        st.stop()
-
     # ── Run pipeline ──────────────────────────────────────────────────
     job_input = {
         "work_year":          work_year,
