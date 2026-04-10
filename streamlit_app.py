@@ -12,9 +12,6 @@ import base64
 import requests
 import streamlit as st
 from datetime import datetime
-from dotenv import load_dotenv
-
-load_dotenv()
 
 FASTAPI_URL  = os.getenv("FASTAPI_URL",  "http://127.0.0.1:8000")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
