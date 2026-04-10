@@ -8,7 +8,7 @@ A full-stack salary prediction system for data different roles. Users submit a j
 
 | Service | URL |
 |---|---|
-| Streamlit Dashboard | https://salaryprediction-9kyatd7zjvrh98icngrfvm.streamlit.app/ |
+| Streamlit Dashboard | https://salaryprediction-hhwuywdyrbd5wqgwlkqghs.streamlit.app/ |
 | FastAPI (Railway) | https://salaryprediction-production-d26f.up.railway.app |
 | FastAPI Health Check | https://salaryprediction-production-d26f.up.railway.app/health |
 | FastAPI Docs | https://salaryprediction-production-d26f.up.railway.app/docs |
